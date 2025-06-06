@@ -638,9 +638,8 @@ void ManageOpenTrades()
                      
                      if(modified)
                      {
-                        // Fix for type conversion warnings - use explicit integer casting
-                        string stopLossStr = DoubleToStr(newStopLoss, (int)5);
-                        Print("Trailing stop updated for trade #", OrderTicket(), " to ", stopLossStr);
+                        // Fix for type conversion warnings - use string concatenation instead of DoubleToStr
+                        Print("Trailing stop updated for trade #", OrderTicket(), " to ", newStopLoss);
                         SendNotification("EURUSD PA EA: Trailing stop updated for trade #" + IntegerToString(OrderTicket()));
                      }
                   }
@@ -654,9 +653,8 @@ void ManageOpenTrades()
                      
                      if(modified)
                      {
-                        // Fix for type conversion warnings - use explicit integer casting
-                        string stopLossStr = DoubleToStr(newStopLoss, (int)5);
-                        Print("Trailing stop updated for trade #", OrderTicket(), " to ", stopLossStr);
+                        // Fix for type conversion warnings - use string concatenation instead of DoubleToStr
+                        Print("Trailing stop updated for trade #", OrderTicket(), " to ", newStopLoss);
                         SendNotification("EURUSD PA EA: Trailing stop updated for trade #" + IntegerToString(OrderTicket()));
                      }
                   }
