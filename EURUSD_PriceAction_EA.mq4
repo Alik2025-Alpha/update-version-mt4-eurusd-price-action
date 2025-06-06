@@ -638,9 +638,8 @@ void ManageOpenTrades()
                      
                      if(modified)
                      {
-                        // Fix for type conversion warnings - use proper precision value
-                        int precision = _Digits; // Use built-in _Digits instead of g_digits
-                        string stopLossStr = DoubleToStr(newStopLoss, precision);
+                        // Fix for type conversion warnings - use explicit integer casting
+                        string stopLossStr = DoubleToStr(newStopLoss, (int)5);
                         Print("Trailing stop updated for trade #", OrderTicket(), " to ", stopLossStr);
                         SendNotification("EURUSD PA EA: Trailing stop updated for trade #" + IntegerToString(OrderTicket()));
                      }
@@ -655,9 +654,8 @@ void ManageOpenTrades()
                      
                      if(modified)
                      {
-                        // Fix for type conversion warnings - use proper precision value
-                        int precision = _Digits; // Use built-in _Digits instead of g_digits
-                        string stopLossStr = DoubleToStr(newStopLoss, precision);
+                        // Fix for type conversion warnings - use explicit integer casting
+                        string stopLossStr = DoubleToStr(newStopLoss, (int)5);
                         Print("Trailing stop updated for trade #", OrderTicket(), " to ", stopLossStr);
                         SendNotification("EURUSD PA EA: Trailing stop updated for trade #" + IntegerToString(OrderTicket()));
                      }
