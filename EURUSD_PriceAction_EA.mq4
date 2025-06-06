@@ -542,7 +542,7 @@ void OpenTrade(int tradeType)
    else
    {
       int errorCode = GetLastError();
-      Print("Error opening trade: ", ErrorToString(errorCode), " (", errorCode, ")");
+      Print("Error opening trade: ", ErrorDescription(errorCode), " (", errorCode, ")");
    }
 }
 
@@ -591,7 +591,8 @@ void ManageOpenTrades()
                      
                      if(modified)
                      {
-                        Print("Trailing stop updated for trade #", OrderTicket(), " to ", DoubleToString(newStopLoss, Digits));
+                        string stopLossStr = DoubleToStr(newStopLoss, g_digits);
+                        Print("Trailing stop updated for trade #", OrderTicket(), " to ", stopLossStr);
                         SendNotification("EURUSD PA EA: Trailing stop updated for trade #" + IntegerToString(OrderTicket()));
                      }
                   }
@@ -605,7 +606,8 @@ void ManageOpenTrades()
                      
                      if(modified)
                      {
-                        Print("Trailing stop updated for trade #", OrderTicket(), " to ", DoubleToString(newStopLoss, Digits));
+                        string stopLossStr = DoubleToStr(newStopLoss, g_digits);
+                        Print("Trailing stop updated for trade #", OrderTicket(), " to ", stopLossStr);
                         SendNotification("EURUSD PA EA: Trailing stop updated for trade #" + IntegerToString(OrderTicket()));
                      }
                   }
