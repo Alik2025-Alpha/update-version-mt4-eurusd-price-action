@@ -534,7 +534,7 @@ void OpenTrade(int tradeType)
       
       // Send notification
       string tradeTypeStr = (tradeType == OP_BUY) ? "BUY" : "SELL";
-      string message = "EURUSD PA EA: New " + tradeTypeStr + " trade opened at " + DoubleToString(price, 5);
+      string message = "EURUSD PA EA: New " + tradeTypeStr + " trade opened at " + DoubleToStr(price, 5);
       SendNotification(message);
       
       Print("Trade opened: ", tradeTypeStr, " at ", price, ", SL: ", stopLoss, ", TP: ", takeProfit);
@@ -542,8 +542,55 @@ void OpenTrade(int tradeType)
    else
    {
       int errorCode = GetLastError();
-      Print("Error opening trade: ", ErrorDescription(errorCode), " (", errorCode, ")");
+      Print("Error opening trade: ", ErrorMsg(errorCode), " (", errorCode, ")");
    }
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to return error message                          |
+//+------------------------------------------------------------------+
+string ErrorMsg(int error_code)
+{
+   string error_string;
+   
+   switch(error_code)
+   {
+      case 0:   error_string = "No error";                                                   break;
+      case 1:   error_string = "No error, but the result is unknown";                        break;
+      case 2:   error_string = "Common error";                                               break;
+      case 3:   error_string = "Invalid trade parameters";                                   break;
+      case 4:   error_string = "Trade server is busy";                                       break;
+      case 5:   error_string = "Old version of the client terminal";                         break;
+      case 6:   error_string = "No connection with trade server";                            break;
+      case 7:   error_string = "Not enough rights";                                          break;
+      case 8:   error_string = "Too frequent requests";                                      break;
+      case 9:   error_string = "Malfunctional trade operation";                              break;
+      case 64:  error_string = "Account disabled";                                           break;
+      case 65:  error_string = "Invalid account";                                            break;
+      case 128: error_string = "Trade timeout";                                              break;
+      case 129: error_string = "Invalid price";                                              break;
+      case 130: error_string = "Invalid stops";                                              break;
+      case 131: error_string = "Invalid trade volume";                                       break;
+      case 132: error_string = "Market is closed";                                           break;
+      case 133: error_string = "Trade is disabled";                                          break;
+      case 134: error_string = "Not enough money";                                           break;
+      case 135: error_string = "Price changed";                                              break;
+      case 136: error_string = "Off quotes";                                                 break;
+      case 137: error_string = "Broker is busy";                                             break;
+      case 138: error_string = "Requote";                                                    break;
+      case 139: error_string = "Order is locked";                                            break;
+      case 140: error_string = "Long positions only allowed";                                break;
+      case 141: error_string = "Too many requests";                                          break;
+      case 145: error_string = "Modification denied because order is too close to market";   break;
+      case 146: error_string = "Trade context is busy";                                      break;
+      case 147: error_string = "Expirations are denied by broker";                           break;
+      case 148: error_string = "Amount of open and pending orders has reached the limit";    break;
+      case 149: error_string = "Hedging is prohibited";                                      break;
+      case 150: error_string = "Prohibited by FIFO rules";                                   break;
+      default:  error_string = "Unknown error";
+   }
+   
+   return(error_string);
 }
 
 //+------------------------------------------------------------------+
@@ -591,7 +638,8 @@ void ManageOpenTrades()
                      
                      if(modified)
                      {
-                        string stopLossStr = DoubleToStr(newStopLoss, g_digits);
+                        // Fix for type conversion warnings - use int cast for g_digits
+                        string stopLossStr = DoubleToStr(newStopLoss, (int)g_digits);
                         Print("Trailing stop updated for trade #", OrderTicket(), " to ", stopLossStr);
                         SendNotification("EURUSD PA EA: Trailing stop updated for trade #" + IntegerToString(OrderTicket()));
                      }
@@ -606,7 +654,8 @@ void ManageOpenTrades()
                      
                      if(modified)
                      {
-                        string stopLossStr = DoubleToStr(newStopLoss, g_digits);
+                        // Fix for type conversion warnings - use int cast for g_digits
+                        string stopLossStr = DoubleToStr(newStopLoss, (int)g_digits);
                         Print("Trailing stop updated for trade #", OrderTicket(), " to ", stopLossStr);
                         SendNotification("EURUSD PA EA: Trailing stop updated for trade #" + IntegerToString(OrderTicket()));
                      }
